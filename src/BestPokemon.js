@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 
 const BestPokemonFetcher = () => { 
 
-  const [bestPokemon]= useState({});
+  const [bestPokemon, setBestPokemon]= useState(null);
   
   useEffect(() => {
     fetch(
       `https://pokeapi.co/api/v2/pokemon/1/`
     )
       .then((res) => res.json())
-      .then((data) => bestPokemon(data));
+      .then((data) => setBestPokemon(data));
   }, []);
   
   if (!bestPokemon) {
@@ -20,14 +20,15 @@ const BestPokemonFetcher = () => {
 }
 
 const BestPokemon = (props) => {
-
+console.log(props.pokemon.abilities)
   return (
   <div>
-  <p>My favourite Pokemon is Squirtle</p>
+  <p>My favourite Pokemon is {props.pokemon.name}</p>
   <ul>
-    {props.abilities.map((name) => {
+    {
+    props.pokemon.abilities.map((el, index) => {
      return (
-     <li>{name}</li>
+     <li key={index}>{el.ability.name}</li>
      )
   })}
 </ul>
